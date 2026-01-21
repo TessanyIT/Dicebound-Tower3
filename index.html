@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+</head>
+<body>
+    <div id="menu" class="screen">
+  <div class="menu-box">
+    <h1 class="title">Die & Ascend</h1>
+
+    <button class="menu-btn" onclick="startGame()">▶ PLAY</button>
+    <button class="menu-btn" onclick="exitGame()">✖ EXIT</button>
+  </div>
+</div>
+<div id="class-select" class="screen hidden">
+  <div class="menu-box">
+
+    <h2 class="title">Choose Your Class</h2>
+
+    <div class="class-container">
+
+      <div class="class-card" onclick="selectClass('thief')">
+        <img src="characters/class-select/thief/59.png">
+        <h3>Thief</h3>
+        <p>High damage, low health</p>
+      </div>
+
+      <div class="class-card" onclick="selectClass('mage')">
+        <img src="characters/class-select/mage/59.png">
+        <h3>Mage</h3>
+        <p>Strong healing magic, low health</p>
+      </div>
+
+      <div class="class-card" onclick="selectClass('swordsman')">
+        <img src="characters/class-select/swordsman/70.png">
+        <h3>Swordsman</h3>
+        <p>High health, steady damage</p>
+      </div>
+
+    </div>
+
+    <button class="menu-btn" onclick="showScreen('menu')">⬅ Back</button>
+
+  </div>
+</div>
+<div id="tutorial" class="screen hidden">
+    <div class="tutorial-container">
+        <img id="tutorial-image" src="tutorial/30.png" alt="Tutorial Image">
+
+        <div class="dialogue-box">
+            <h3 id="tutorial-name">Tower Goddess</h3>
+            <p id="dialogue-text"></p>
+            <span class="continue">[Press any key]</span>
+        </div>
+    </div>
+</div>
+<div id="game-complete" class="screen hidden">
+  <div class="complete-container">
+    <h1 id="completion-text">You've completed the game!</h1>
+    <button class="menu-btn" onclick="showScreen('menu')">Back to Menu</button>
+  </div>
+</div>
+<div id="game" class="screen hidden">
+  <div id="shop" class="screen hidden">
+    <div class="shop-container">
+      <div class="shop-header">
+        <h1 class="shop-title">SHOP</h1>
+        <div class="shop-stats">
+          <span>Floor: <span id="shop-floor">1</span></span>
+          <span>Gold: <span id="shop-gold">0</span></span>
+          <span>HP: <span id="shop-hp">0</span>/<span id="shop-max-hp">0</span></span>
+        </div>
+      </div>
+      <div id="shop-items" class="shop-items"></div>
+      <div class="shop-footer">
+        <button id="next-floor-btn" class="menu-btn" onclick="closeShop()">→ NEXT FLOOR</button>
+      </div>
+    </div>
+  </div>
+  <div id="floor-1">
+    <div class="combat-container">
+    <div class="combat-slot player-slot">
+      <div class="player-health-bar-container">
+        <div class="player-health-bar"></div>
+      </div>
+      <img id="player-character">
+      <div id="player-heal-effect" class="heal-effect hidden"></div>
+    </div>
+
+    <div class="combat-slot enemy-slot">
+      <div class="enemy-group enemy-position-0">
+        <div class="enemy-health-bar-container">
+          <div class="enemy-health-bar"></div>
+        </div>
+        <img id="enemy-character">
+        <div class="heal-effect enemy-heal-effect hidden"></div>
+      </div>
+      <div id="enemy-heal-effect" class="heal-effect hidden"></div>
+    </div>
+  </div>
+  </div>
+  <div id="floor-2" class="hidden">
+    <div class="combat-container">
+    <div class="combat-slot player-slot">
+      <div class="player-health-bar-container">
+        <div class="player-health-bar"></div>
+      </div>
+      <img id="player-character">
+      <div id="player-heal-effect" class="heal-effect hidden"></div>
+    </div>
+    <div class="combat-slot enemy-slot">
+      <div class="enemy-group enemy-position-0">
+        <div class="enemy-health-bar-container">
+          <div class="enemy-health-bar"></div>
+        </div>
+        <img id="enemy-character">
+        <div class="heal-effect enemy-heal-effect hidden"></div>
+      </div>
+      <div class="enemy-group enemy-position-1">
+        <div class="enemy-health-bar-container-2">
+          <div class="enemy-health-bar-2"></div>
+        </div>
+        <img id="enemy-character2">
+        <div class="heal-effect enemy-heal-effect hidden"></div>
+      </div>
+      <div id="enemy-heal-effect" class="heal-effect hidden"></div>
+    </div>
+    </div>
+  </div>
+  <div id="floor-3" class="hidden">
+    <div class="combat-container">
+    <div class="combat-slot player-slot">
+      <div class="player-health-bar-container">
+        <div class="player-health-bar"></div>
+      </div>
+      <img id="player-character">
+      <div id="player-heal-effect" class="heal-effect hidden"></div>
+    </div>
+    <div class="combat-slot enemy-slot">
+      <div class="enemy-group enemy-position-0">
+        <div class="enemy-health-bar-container">
+          <div class="enemy-health-bar"></div>
+        </div>
+        <img id="enemy-character">
+        <div class="heal-effect enemy-heal-effect hidden"></div>
+      </div>
+      <div id="enemy-heal-effect" class="heal-effect hidden"></div>
+    </div>
+    </div>
+  </div>
+  <div id="attack-card" class="hidden">
+    <img src="items/diamond-sword.png" alt="sword">
+    <h3>Attack</h3>
+  </div>
+  <div id="heal-card" class="hidden">
+    <img src="items/heal.png" alt="heal">
+    <h3>Heal</h3>
+  </div>
+  <div id="information" class="hidden">
+    <h2 id="whose-turn" class="hidden"></h2>
+    <h2 id="roll-number" class="hidden"></h2>
+  </div>
+</div>
+
+
+
+    <script src="script.js"></script>
+</body>
+</html>

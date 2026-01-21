@@ -1,0 +1,808 @@
+html, body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+}
+
+.complete-container {
+  background: rgba(0, 0, 0, 0.7);
+  border: 4px solid #FFD700;
+  padding: 40px 60px;
+  text-align: center;
+  color: #FFD700;
+  font-family: 'Courier New', monospace;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
+}
+
+.complete-container h1 {
+  margin: 0 0 30px 0;
+  font-size: 42px;
+  letter-spacing: 2px;
+}
+
+.screen {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.title {
+  font-size: 48px;
+  margin-bottom: 30px;
+  font-family: 'Courier New', monospace;
+  letter-spacing: 3px;
+  color: white;
+  text-align: center;
+}
+
+.menu-btn {
+  display: block;
+  width: 220px;
+  margin: 12px auto;
+  padding: 14px 0;
+  font-size: 20px;
+  background: #111;
+  color: white;
+  border: 3px solid white;
+  cursor: pointer;
+  font-family: monospace;
+}
+
+.menu-btn:hover {
+  background: #333;
+}
+
+#class-select{
+  background-image: url("backgrounds/Floor.png");
+  background-size: cover;
+}
+
+.class-container {
+  display: flex;
+  gap: 30px;
+  margin: 30px 0;
+}
+
+.class-card {
+  width: 400px;
+  height: 400px;
+  padding: 15px;
+  background: rgba(0,0,0,0.7);
+  border: 3px solid white;
+  cursor: pointer;
+  transition: transform 0.1s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  
+}
+
+.class-card:hover {
+  transform: scale(1.05);
+  background: rgba(255,255,255,0.1);
+}
+
+.class-card img {
+  width: 256px;
+  height: 256px;
+  image-rendering: pixelated;
+}
+
+.class-card h3 {
+  font-size: 25px;
+  margin-bottom: 10px;
+  font-family: 'Courier New', monospace;
+  letter-spacing: 3px;
+  color: white;
+  text-align: center;
+}
+
+.class-card p {
+  font-size: 20px;
+  opacity: 0.8;
+  color: white;
+  font-family: 'Courier New', monospace;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.tutorial-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: flex-end;
+  padding: 30px;
+  box-sizing: border-box;
+}
+
+#npc-portrait {
+  width: 500px;
+  height: 500px;
+  image-rendering: pixelated;
+}
+
+.dialogue-box {
+  margin-left: 20px;
+  flex-grow: 1;
+  background: rgba(0, 0, 0, 0.85);
+  border: 3px solid white;
+  padding: 20px;
+  font-size: 18px;
+  position: relative;
+}
+
+#dialogue-text{
+  color: white;
+  padding-top: 30px;
+  font-family: 'Courier New', monospace;
+  line-height: 1.4;
+}
+
+#tutorial-name{
+  position: absolute;
+  top: -5px;
+  left: 20px;
+  color: white;
+  font-size: 20px;
+  font-family: 'Courier New', monospace;
+}
+
+.continue {
+  position: absolute;
+  color: white;
+  bottom: 8px;
+  right: 12px;
+  font-size: 14px;
+}
+
+.combat-container {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding: 0 80px;
+  margin-top: 400px;
+  box-sizing: border-box;
+  overflow: visible;
+}
+
+.combat-slot {
+  overflow: visible;
+}
+
+.player-slot {
+  right: 280px;
+  position: relative; 
+}
+
+.enemy-slot {
+  left: 280px;
+  position: relative; 
+  display: flex;
+  flex-direction: row;
+  gap: 0;
+  align-items: flex-end;
+  overflow: visible;
+}
+
+/* Floor-1 specific positioning (original layout) */
+#floor-1 .combat-container {
+  margin-top: 0;
+  height: 100%;
+  align-items: flex-end;
+  padding-bottom: 150px;
+  justify-content: center;
+  gap: 260px;
+}
+
+#floor-1 .player-slot {
+  left: 0;
+  right: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#floor-1 .enemy-slot {
+  right: 0;
+  left: auto;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+}
+
+/* Floor-2 specific positioning (enemies left, player right) */
+#floor-2 {
+  overflow: visible;
+}
+
+#floor-2 .player-slot {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#floor-2 .enemy-slot {
+  flex-direction: row;
+  gap: 40px;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.combat-slot img {
+  width: 180px;
+  height: 180px;
+  image-rendering: pixelated;
+}
+
+/* Enemy characters - NO transform, let images show naturally */
+.enemy-slot img {
+  display: block;
+  image-rendering: pixelated;
+}
+
+#player-character {
+  display: block;
+  image-rendering: pixelated;
+  transform: scaleX(-1); /* Flip player to face right */
+}
+
+#enemy-sprite {
+  transform: scaleX(-1) rotate(180deg);
+}
+
+#menu {
+  background-image: url("backgrounds/Floor.png");
+  background-size: cover;
+}
+
+#game{
+  background-image: url("backgrounds/Floor-fight.png"); 
+  background-size: 100% 100%;        
+  background-repeat: no-repeat;
+  background-position: bottom center; 
+
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  overflow: visible;
+}
+
+#floor-1{
+  background-image: url("backgrounds/Floor-fight.png"); 
+  background-size: 100% 100%;        
+  background-repeat: no-repeat;
+  background-position: bottom center; 
+
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  overflow: visible;
+}
+
+#tutorial {
+  background-image: url("backgrounds/Floor.png");
+  background-size: cover;
+}
+
+.player-health-bar-container {
+  position: relative;
+  overflow: hidden;
+  height: 15px;          
+  width: 100px;
+  margin-bottom: 5px;
+  margin-left: auto;
+  margin-right: auto;
+  background: #000000;
+  border: 2px solid #000000;
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.player-health-bar {
+  height: 100%;
+  background: #00ff00;
+  width: 100%;
+  transition: width 0.2s ease;
+}
+
+.enemy-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  position: relative;
+  --enemy-slide-distance: 0px;
+}
+
+.enemy-position-0 {
+  order: 0;
+}
+
+.enemy-position-1 {
+  order: 1;
+  margin-left: 40px;
+}
+
+.enemy-position-2 {
+  order: 2;
+  margin-left: 80px;
+}
+
+.enemy-health-bar-container {
+  position: relative;
+  overflow: hidden;
+  height: 15px;          
+  width: 100px;
+  background: #000000;
+  border: 2px solid #000000;
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.enemy-health-bar {
+  height: 100%;
+  background: #00ff00;
+  width: 100%;
+  transition: width 0.2s ease;
+}
+
+.enemy-health-bar-container-2 {
+  position: relative;
+  overflow: hidden;
+  height: 15px;          
+  width: 100px;
+  background: #000000;
+  border: 2px solid #000000;
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.enemy-health-bar-2 {
+  height: 100%;
+  background: #00ff00;
+  width: 100%;
+  transition: width 0.2s ease;
+}
+
+.enemy-health-bar-container-3 {
+  position: relative;
+  overflow: hidden;
+  height: 15px;          
+  width: 100px;
+  background: #000000;
+  border: 2px solid #000000;
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.enemy-health-bar-3 {
+  height: 100%;
+  background: #00ff00;
+  width: 100%;
+  transition: width 0.2s ease;
+}
+
+#attack-card{
+  width: 100px;
+  height: 100px;
+  padding: 15px;
+  background: rgba(0,0,0,0.7);
+  border: 3px solid white;
+  cursor: pointer;
+  transition: transform 0.1s;
+  display: flex;
+  bottom: 30px;
+  position: absolute;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-right: 190px;
+}
+
+#attack-card:hover, #heal-card:hover {
+  transform: scale(1.1);
+  background: rgba(255,255,255,0.1);
+}
+
+#heal-card{
+  width: 100px;
+  height: 100px;
+  padding: 15px;
+  background: rgba(0,0,0,0.7);
+  border: 3px solid white;
+  cursor: pointer;
+  transition: transform 0.1s;
+  display: flex;
+  bottom: 30px;
+  position: absolute;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-left: 140px;
+}
+
+#attack-card img {
+  width: 80px;
+  height: 80px;
+  image-rendering: pixelated;
+}
+
+#heal-card img {
+  width: 80px;
+  height: 80px;
+  image-rendering: pixelated;
+}
+
+#attack-card h3, #heal-card h3 {
+  font-size: 20px;
+  margin-top: 5px;
+  font-family: 'Courier New', monospace;
+  letter-spacing: 2px;
+  color: white;
+  text-align: center;
+}
+
+#information {
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: white;
+  font-family: 'Courier New', monospace;
+  text-align: center;
+}
+
+#whose-turn, #roll-number {
+  margin: 5px 0;
+}
+
+/* ================= ATTACK ANIMATIONS ================= */
+
+.player-slot {
+  --slide-distance: 0px;
+}
+
+@keyframes slideRight {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(var(--slide-distance));
+  }
+}
+
+@keyframes slideLeft {
+  0% {
+    transform: translateX(var(--slide-distance));
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes enemySlideLeft {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(var(--enemy-slide-distance));
+  }
+}
+
+@keyframes enemySlideRight {
+  0% {
+    transform: translateX(var(--enemy-slide-distance));
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.player-slide-right {
+  animation: slideRight 1.0s ease-in-out forwards;
+}
+
+.player-slide-left {
+  animation: slideLeft 1.0s ease-in-out forwards;
+}
+
+.enemy-slide-left {
+  animation: enemySlideLeft 1.0s ease-in-out forwards;
+}
+
+.enemy-slide-right {
+  animation: enemySlideRight 1.0s ease-in-out forwards;
+}
+
+/* ================= GAME INFORMATION ================= */
+
+#information {
+  position: absolute;
+  top: 15%;
+  left: 48.5%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  z-index: 100;
+}
+
+#whose-turn {
+  font-size: 48px;
+  color: white;
+  font-family: 'Courier New', monospace;
+  letter-spacing: 3px;
+  margin: 0 0 20px 0;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+#roll-number {
+  font-size: 72px;
+  color: #ffdd00;
+  font-family: 'Courier New', monospace;
+  font-weight: bold;
+  margin: 0;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+/* ================= HEAL EFFECT ================= */
+
+@keyframes healFloat {
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-150px);
+  }
+}
+
+.heal-effect {
+  position: absolute;
+  width: 60px;
+  height: 200px;
+  top: -80px;
+  left: 20%;
+  transform: translateX(-50%);
+  background: url('characters/effects/heal-effect.png') no-repeat center;
+  background-size: contain;
+  image-rendering: pixelated;
+  pointer-events: none;
+  animation: healFloat 2s ease-out forwards;
+}
+
+.heal-effect.hidden {
+  display: none !important;
+}
+
+/* Floor 3 custom slide animations (no rotateY needed since enemies already flipped) */
+#floor-3 .player-slot.player-slide-right {
+  animation: slideRightFloor3 1.0s ease-in-out forwards;
+}
+
+#floor-3 .player-slot.player-slide-left {
+  animation: slideLeftFloor3 1.0s ease-in-out forwards;
+}
+
+@keyframes slideRightFloor3 {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(var(--slide-distance));
+  }
+}
+
+@keyframes slideLeftFloor3 {
+  0% {
+    transform: translateX(var(--slide-distance));
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+/* ================= SHOP ================= */
+
+#shop {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+  background-image: url(backgrounds/shop.png);
+  background-size: cover;
+  z-index: 200;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+}
+
+.shop-container {
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  background: none;
+  border: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0;
+  box-shadow: none;
+  font-family: 'Courier New', monospace;
+}
+
+.shop-header {
+  text-align: center;
+  margin-bottom: 40px;
+  border-bottom: none;
+  padding-bottom: 20px;
+}
+
+.shop-title {
+  font-size: 48px;
+  color: #FFD700;
+  margin: 0 0 15px 0;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+  letter-spacing: 3px;
+}
+
+.shop-stats {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  font-size: 24px;
+  color: white;
+  letter-spacing: 2px;
+}
+
+.shop-stats span {
+  display: flex;
+  gap: 10px;
+}
+
+.shop-stats span span {
+  color: #FFD700;
+  font-weight: bold;
+}
+
+
+.shop-items {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(260px, 320px));
+  grid-template-rows: repeat(4, auto);
+  grid-auto-flow: column;
+  gap: 28px 140px;
+  padding: 0 40px;
+  margin-bottom: 40px;
+  width: 100%;
+  max-width: 1400px;
+  box-sizing: border-box;
+  justify-content: space-between;
+  align-items: start;
+}
+
+.shop-item {
+  width: 280px;
+  background: linear-gradient(135deg, #2a2a4e 0%, #1a1a3e 100%);
+  border: 2px solid #FFD700;
+  padding: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.6);
+}
+
+.shop-item:nth-child(1),
+.shop-item:nth-child(2),
+.shop-item:nth-child(3),
+.shop-item:nth-child(4) {
+  grid-column: 1;
+}
+
+.shop-item:nth-child(5),
+.shop-item:nth-child(6),
+.shop-item:nth-child(7),
+.shop-item:nth-child(8) {
+  grid-column: 2;
+}
+
+.shop-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(255, 215, 0, 0.5);
+  background: linear-gradient(135deg, #3a3a5e 0%, #2a2a4e 100%);
+}
+
+.shop-item:disabled,
+.shop-item.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  border-color: #666;
+}
+
+.shop-item.disabled:hover {
+  transform: none;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.6);
+}
+
+.shop-item-name {
+  font-size: 16px;
+  color: #FFD700;
+  font-weight: bold;
+  margin-bottom: 6px;
+  letter-spacing: 1px;
+}
+
+.shop-item-description {
+  font-size: 12px;
+  color: #ccc;
+  margin-bottom: 8px;
+  min-height: 24px;
+}
+
+.shop-item-price {
+  font-size: 14px;
+  color: white;
+  margin-bottom: 6px;
+}
+
+.shop-item-price .gold {
+  color: #FFD700;
+  font-weight: bold;
+}
+
+.shop-item-btn {
+  width: 100%;
+  padding: 6px 10px;
+  background: #FFD700;
+  color: #000;
+  border: none;
+  font-family: 'Courier New', monospace;
+  font-size: 12px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s;
+  letter-spacing: 0.5px;
+}
+
+.shop-item-btn:hover:not(:disabled) {
+  background: #FFF;
+  box-shadow: 0 0 10px rgba(255, 215, 0, 0.8);
+}
+
+.shop-item-btn:disabled {
+  background: #666;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.shop-footer {
+  display: flex;
+  justify-content: center;
+  padding-top: 20px;
+  border-top: none;
+  width: 100%;
+}
+
+.shop-footer .menu-btn {
+  width: 300px;
+  font-size: 24px;
+  padding: 15px 0;
+  background: #FFD700;
+  color: #000;
+  font-weight: bold;
+  border: 3px solid #000;
+}
+
+.shop-footer .menu-btn:hover {
+  background: #FFF;
+  box-shadow: 0 0 15px rgba(255, 215, 0, 0.8);
+}
+
