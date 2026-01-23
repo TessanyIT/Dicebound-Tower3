@@ -104,12 +104,12 @@ const playerSpriteInfo = {
   thief: { 
     folder: "characters/class-select/thief/", 
     idleFrames: 4,
-    attackFrames: 0
+    attackFrames: 4
   },
   mage: { 
     folder: "characters/class-select/mage/", 
     idleFrames: 4, 
-    attackFrames: 0 
+    attackFrames: 4 
   },
   swordsman: { 
     folder: "characters/class-select/swordsman/", 
@@ -171,6 +171,13 @@ function startPlayerIdleAnimation() {
   if (playerIdleTimer) clearInterval(playerIdleTimer);
 
   playerSprite.src = playerIdleImages[0];
+  
+  // Apply correct transform based on class
+  if (player.class === 'thief') {
+    playerSprite.style.transform = 'scaleX(1)';
+  } else {
+    playerSprite.style.transform = 'scaleX(-1)';
+  }
 
   playerIdleTimer = setInterval(() => {
     playerSprite.src = playerIdleImages[playerIdleFrameIndex];
@@ -185,6 +192,14 @@ function startPlayerAttackAnimation() {
   if (playerAttackTimer) clearInterval(playerAttackTimer);
 
   playerSprite.src = playerAttackImages[0];
+  
+  // Apply correct transform based on class
+  if (player.class === 'thief') {
+    playerSprite.style.transform = 'scaleX(1)';
+  } else {
+    playerSprite.style.transform = 'scaleX(-1)';
+  }
+  
   playerAttackFrameIndex = 0;
 
   playerAttackTimer = setInterval(() => {
@@ -231,7 +246,7 @@ const enemyTypes = {
     name: "Slime",
     maxHp: 15,
     idleFrames: 4,
-    attackFrames: 0,
+    attackFrames: 4,
     folder: "enemies/slime/",
     goldReward: 50
   },
@@ -296,21 +311,43 @@ function loadEnemyIdleAnimation(enemyType) {
   enemyIdleFrameIndex = 0;
 }
 
-function loadEnemyAttackAnimation() {
-  const aliveEnemy = allEnemiesInBattle.find(enemy => enemy && enemy.hp > 0);
-  if (!aliveEnemy) return;
+function loadEnemyAttackAnimation(enemyIndex = null) {
+  let targetEnemy;
+  
+  if (enemyIndex !== null && allEnemiesInBattle[enemyIndex]) {
+    targetEnemy = allEnemiesInBattle[enemyIndex];
+  } else {
+    targetEnemy = allEnemiesInBattle.find(enemy => enemy && enemy.hp > 0);
+  }
+  
+  if (!targetEnemy) {
+    console.warn("No target enemy found for attack animation");
+    return;
+  }
 
-  const enemyInfo = enemyTypes[aliveEnemy.type];
-  if (!enemyInfo) return;
+  const enemyInfo = enemyTypes[targetEnemy.type];
+  if (!enemyInfo) {
+    console.warn("No enemy info found for type:", targetEnemy.type);
+    return;
+  }
+
+  console.log(`Loading attack animation for ${targetEnemy.type}:`, {
+    attackFrames: enemyInfo.attackFrames,
+    folder: enemyInfo.folder
+  });
 
   if (!enemyInfo.attackFrames || enemyInfo.attackFrames <= 0) {
+    console.log("Using idle images as fallback");
     enemyAttackImages = enemyIdleImages.slice();
   } else {
     enemyAttackImages = [];
     for (let i = 1; i <= enemyInfo.attackFrames; i++) {
-      enemyAttackImages.push(enemyInfo.folder + `attack${i}.png`);
+      const path = enemyInfo.folder + `attack${i}.png`;
+      console.log(`Adding attack image: ${path}`);
+      enemyAttackImages.push(path);
     }
   }
+  console.log("Final attack images array:", enemyAttackImages);
   enemyAttackFrameIndex = 0;
 }
 
@@ -377,7 +414,19 @@ function startEnemyAttackAnimationByIndex(enemyIndex) {
   
   const spriteId = enemyIndex === 0 ? "#enemy-character" : `#enemy-character${enemyIndex + 1}`;
   const enemySprite = getElementInCurrentFloor(spriteId);
-  if (!enemySprite || enemyAttackImages.length === 0) return;
+  
+  console.log(`Attack animation for enemy ${enemyIndex}:`, {
+    enemyType: allEnemiesInBattle[enemyIndex].type,
+    spriteId,
+    spriteFound: !!enemySprite,
+    attackImagesLength: enemyAttackImages.length,
+    attackImages: enemyAttackImages
+  });
+  
+  if (!enemySprite || enemyAttackImages.length === 0) {
+    console.warn(`Skipping attack animation - sprite: ${!!enemySprite}, images: ${enemyAttackImages.length}`);
+    return;
+  }
 
   if (!allEnemiesInBattle[enemyIndex].attackFrameIndex) {
     allEnemiesInBattle[enemyIndex].attackFrameIndex = 0;
@@ -401,11 +450,14 @@ function startEnemyAttackAnimationByIndex(enemyIndex) {
   
   allEnemiesInBattle[enemyIndex].attackFrameIndex = 0;
 
+  console.log(`Starting attack animation interval for enemy ${enemyIndex}`);
   allEnemiesInBattle[enemyIndex].attackTimer = setInterval(() => {
+    console.log(`Attack frame update - enemy ${enemyIndex}, frame ${allEnemiesInBattle[enemyIndex].attackFrameIndex}`);
     enemySprite.src = enemyAttackImages[allEnemiesInBattle[enemyIndex].attackFrameIndex];
     allEnemiesInBattle[enemyIndex].attackFrameIndex++;
     
     if (allEnemiesInBattle[enemyIndex].attackFrameIndex >= enemyAttackImages.length) {
+      console.log(`Attack animation finished for enemy ${enemyIndex}`);
       allEnemiesInBattle[enemyIndex].attackFrameIndex = 0;
       clearInterval(allEnemiesInBattle[enemyIndex].attackTimer);
       allEnemiesInBattle[enemyIndex].attackTimer = null;
@@ -920,7 +972,8 @@ function startEnemyTurn() {
     }
 
     setTimeout(() => {
-      loadEnemyAttackAnimation();
+      loadEnemyIdleAnimation(allEnemiesInBattle[currentEnemyTurnIndex].type);
+      loadEnemyAttackAnimation(currentEnemyTurnIndex);
       startEnemyAttackAnimationByIndex(currentEnemyTurnIndex);
       
       const damageRoll = rollDice(enemyDiceSides);
