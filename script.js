@@ -743,7 +743,7 @@ function updateHealthBars() {
   allEnemiesInBattle.forEach((enemy, index) => {
     if (!enemy || !enemyGroups[index]) return;
     
-    const healthBar = enemyGroups[index].querySelector("[class*='enemy-health-bar']");
+    const healthBar = enemyGroups[index].querySelector(".enemy-health-bar, .enemy-health-bar-2, .enemy-health-bar-3");
     if (healthBar) {
       const enemyHealthPercent = (enemy.hp / enemy.maxHp) * 100;
       healthBar.style.width = `${enemyHealthPercent}%`;

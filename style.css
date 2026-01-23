@@ -202,7 +202,7 @@ html, body {
 }
 
 #floor-1 .player-slot {
-  left: 0;
+  left: -200px;
   right: auto;
   display: flex;
   flex-direction: column;
@@ -344,6 +344,9 @@ html, body {
   border: 2px solid #000000;
   border-radius: 15px;
   box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  margin-bottom: 5px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .enemy-health-bar {
@@ -362,6 +365,9 @@ html, body {
   border: 2px solid #000000;
   border-radius: 15px;
   box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  margin-bottom: 5px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .enemy-health-bar-2 {
@@ -380,6 +386,9 @@ html, body {
   border: 2px solid #000000;
   border-radius: 15px;
   box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  margin-bottom: 5px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .enemy-health-bar-3 {
