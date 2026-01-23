@@ -172,7 +172,6 @@ function startPlayerIdleAnimation() {
 
   playerSprite.src = playerIdleImages[0];
   
-  // Apply correct transform based on class
   if (player.class === 'thief') {
     playerSprite.style.transform = 'scaleX(1)';
   } else {
@@ -193,7 +192,6 @@ function startPlayerAttackAnimation() {
 
   playerSprite.src = playerAttackImages[0];
   
-  // Apply correct transform based on class
   if (player.class === 'thief') {
     playerSprite.style.transform = 'scaleX(1)';
   } else {
@@ -867,7 +865,6 @@ function playerAttack() {
     const damageRoll = rollDice(playerDiceSides);
     if (targetEnemy) {
       targetEnemy.hp = Math.max(targetEnemy.hp - damageRoll, 0);
-      // Check if enemy died and collect gold
       if (targetEnemy.hp <= 0) {
         const goldReward = enemyTypes[targetEnemy.type]?.goldReward || 0;
         player.gold += goldReward;
@@ -1091,22 +1088,18 @@ function showGameComplete() {
 // ==========================================
 
 function showShop() {
-  // Hide combat elements
   for (let i = 1; i <= 3; i++) {
     const floor = document.getElementById(`floor-${i}`);
     if (floor) floor.classList.add("hidden");
   }
   
-  // Update shop display
   document.getElementById("shop-floor").textContent = currentFloorNumber - 1;
   document.getElementById("shop-gold").textContent = player.gold;
   document.getElementById("shop-hp").textContent = player.hp;
   document.getElementById("shop-max-hp").textContent = player.maxHp;
   
-  // Populate shop items
   populateShopItems();
   
-  // Show shop
   showScreen("game");
   document.getElementById("shop").classList.remove("hidden");
 }
@@ -1154,12 +1147,10 @@ function buyItem(item) {
     player.gold -= item.cost;
     item.effect();
     
-    // Update display
     document.getElementById("shop-gold").textContent = player.gold;
     document.getElementById("shop-hp").textContent = player.hp;
     document.getElementById("shop-max-hp").textContent = player.maxHp;
     
-    // Refresh shop items display
     populateShopItems();
     
     console.log(`Purchased: ${item.name}`);
